@@ -1,0 +1,59 @@
+<!--Native HTML/JS approach to the guestbook to demonstrate certain vulnerabilities-->
+
+<html>
+<head>
+    <script>
+        window.onload = function () {
+            let params = new URL(document.location).searchParams;
+            let name = params.get("name");   
+            document.getElementById("filter-heading").innerHTML += name;
+
+            const getMessagesURL = `/api/filter_messages?name=${name}`;
+            fetch(getMessagesURL)
+                .then((response) => {
+                    return response.json();
+                })
+                .then((data) => {
+                    const ul = document.getElementById('messages');
+                    const list = document.createDocumentFragment();
+
+                    let allMessages = data;
+                    allMessages.map(function (msg) {
+                        let li = document.createElement('li');
+                        list.appendChild(li);
+                        
+                        let table = document.createElement('table');
+                        li.appendChild(table);
+
+                        let tbody = document.createElement('tbody');
+                        table.appendChild(tbody);
+
+                        let trMessage = document.createElement('tr');
+                        tbody.appendChild(trMessage);
+
+                        let tdMessage = document.createElement('td');
+                        trMessage.appendChild(tdMessage);
+
+                        tdMessage.innerHTML = `Message: ${msg}`;
+
+                        ul.appendChild(list);
+                    });
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
+        };
+    </script>
+</head>
+
+<body>
+    <div>
+        <span id="filter-heading">Here are all the messages posted by </span>
+
+        <ul id="messages">
+        </ul>
+    </div>
+    
+</body>
+
+</html>
