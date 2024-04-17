@@ -4,8 +4,8 @@
 <head>
     <script>
         window.onload = function () {
-            let params = new URL(document.location).searchParams;
-            let name = params.get("name");   
+            const params = new URL(document.location).searchParams;
+            const name = params.get("name");   
             document.getElementById("filter-heading").innerHTML += name;
 
             const getMessagesURL = `/api/filter_messages?name=${name}`;
@@ -17,21 +17,21 @@
                     const ul = document.getElementById('messages');
                     const list = document.createDocumentFragment();
 
-                    let allMessages = data;
+                    const allMessages = data;
                     allMessages.map(function (msg) {
-                        let li = document.createElement('li');
+                        const li = document.createElement('li');
                         list.appendChild(li);
                         
-                        let table = document.createElement('table');
+                        const table = document.createElement('table');
                         li.appendChild(table);
 
-                        let tbody = document.createElement('tbody');
+                        const tbody = document.createElement('tbody');
                         table.appendChild(tbody);
 
-                        let trMessage = document.createElement('tr');
+                        const trMessage = document.createElement('tr');
                         tbody.appendChild(trMessage);
 
-                        let tdMessage = document.createElement('td');
+                        const tdMessage = document.createElement('td');
                         trMessage.appendChild(tdMessage);
 
                         tdMessage.innerHTML = `Message: ${msg}`;
