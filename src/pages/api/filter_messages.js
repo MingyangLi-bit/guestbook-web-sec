@@ -27,10 +27,8 @@ export default async function handler(req, res) {
     try {
         const messages = await filter(db, req.query);
         closeDBInstance(db);
-        console.log("YONNEH");
         res.status(200).json(messages);
     } catch (e) {
-        console.log("WERE IN THIS ONE");
         console.error(e);
         closeDBInstance(db);
         res.status(400).json(e.message);
