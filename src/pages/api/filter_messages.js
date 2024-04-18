@@ -10,11 +10,17 @@ const filter = async (db, queryParams) => {
         const query = `SELECT message FROM messages WHERE name = \'${nameQuery}\'`;
         console.log(query);
         db.query(query, (err, rows, fields) => {
-            if (fields.length > 1 && fields[0].constructor == Array) {
-                rows = rows[0]; // I have no idea why it returned an array of arrays but need to extract it out
+            if (fields[0].constructor == Array) {
+                let new_rows = []
+                for (let i = 0; i < fields.length; i++) {
+                    if (fields[i] != undefined) {
+                        new_rows.push(rows[i][0]);
+                    }
+                }
+                rows = new_rows;
             }
             if (err) {
-                console.error("Error getting messages2");
+                console.error("Error getting messages");
                 return reject(err);
             }
             return resolve(rows.map(r => r.message));
